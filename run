@@ -31,7 +31,7 @@ chroot_run "sed -i 's/^#\(auth\)/\1/' /etc/pam.d/su"
 
 if [ -x rootfs/build/buildpkg ]; then
 	chroot_run "su builder -c 'cd /build; script -qc ./buildpkg /dev/null'"
-	sudo rm -rfv rootfs/build/packages/L10N
+	(cd rootfs/build/packages; sudo cp ../staging/*.pkg.tar* .)
 	ls rootfs/build/packages > pkglist.txt
 	echo "FILEPATH=$PWD" >> $GITHUB_ENV
 	echo "BUILD_DATE=$(date -u +%Y%m%d)" >> $GITHUB_ENV
